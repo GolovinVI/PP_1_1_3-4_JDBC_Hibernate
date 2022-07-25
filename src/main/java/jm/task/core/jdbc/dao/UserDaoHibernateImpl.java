@@ -1,17 +1,11 @@
 package jm.task.core.jdbc.dao;
 
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
+
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
-import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.NativeQuery;
-import org.hibernate.query.Query;
-
-
+import java.util.ArrayList;
 import java.util.List;
 
 import static jm.task.core.jdbc.util.Util.getSessionFactory;
@@ -23,83 +17,145 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
     Transaction transaction = null;
-    @Deprecated
+//    @Deprecated
     @Override
     public void createUsersTable() {
         Session session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try {transaction = session.beginTransaction();
         session.createNativeQuery("CREATE TABLE IF NOT EXISTS CONSUMER(id mediumint not null auto_increment, name VARCHAR(50), lastname VARCHAR(50), age tinyint, PRIMARY KEY (id))").executeUpdate();
         transaction.commit();
-        session.close();
+        }catch (Exception e){
+            e.printStackTrace();
+            if (transaction!=null){
+                transaction.rollback();
+            }
+        }finally {
+            if(session!=null){
+                session.close();
+            }
+        }
 
     }
 
-    @Deprecated
+//    @Deprecated
     @Override
     public void dropUsersTable() {
         Session session = sessionFactory.openSession();
-        transaction = session.beginTransaction();
-        session.createNativeQuery("DROP TABLE IF EXISTS CONSUMER").executeUpdate();
-        transaction.commit();
-        session.close();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            session.createNativeQuery("DROP TABLE IF EXISTS CONSUMER").executeUpdate();
+            transaction.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            if (transaction!=null){
+                transaction.rollback();
+            }
+        }finally {
+            if(session!=null){
+                session.close();
+            }
+        }
 
 
 
     }
 
 
-    @Deprecated
+//    @Deprecated
     @Override
     public void saveUser(String name, String lastName, byte age) {
             Session session = getSessionFactory().openSession();
-            transaction = session.beginTransaction();
-            User user = new User();
-            user.setName(name);
-            user.setLastName(lastName);
-            user.setAge(age);
-            session.save(user);
-            transaction.commit();
+            Transaction transaction = null;
+            try {
+                transaction = session.beginTransaction();
+                User user = new User();
+                user.setName(name);
+                user.setLastName(lastName);
+                user.setAge(age);
+                session.save(user);
+                transaction.commit();
+            }catch (Exception e){
+                e.printStackTrace();
+                if (transaction!=null){
+                    transaction.rollback();
+                }
+            }finally {
+                if(session!=null){
+                    session.close();
+                }
+            }
 
 
     }
 
-    @Deprecated
+//    @Deprecated
     @Override
     public void removeUserById(long id) {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
-        transaction = session.beginTransaction();
-        session.createNativeQuery("DELETE FROM CONSUMER WHERE id = ?");
-        transaction.commit();
-        session.close();
+        try {
+            transaction = session.beginTransaction();
+            session.createNativeQuery("DELETE FROM CONSUMER WHERE id = ?");
+            transaction.commit();
+        }catch (Exception e){
+            e.printStackTrace();
+            if (transaction!=null){
+                transaction.rollback();
+            }
+        }finally {
+            if(session!=null){
+                session.close();
+            }
+        }
 
 
     }
 
 
-    @Deprecated
+//    @Deprecated
     @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.openSession();
+        Transaction transaction = null;
+        List<User> userList = new ArrayList<>();
         try {
-            List<User> userList = session.createNativeQuery("Select * from CONSUMER", User.class).getResultList();
-            return userList;
-        }catch (Exception e){
-            return null;
-        }finally {
-            session.close();
+            userList = session.createNativeQuery("Select * from CONSUMER", User.class).getResultList();
+            transaction.commit();
+        }catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null)
+                session.close();
         }
+        return userList;
     }
 
-    @Deprecated
+//    @Deprecated
     @Override
     public void cleanUsersTable() {
         Session session = sessionFactory.openSession();
         Transaction transaction = null;
-        transaction = session.beginTransaction();
+        try {
+            transaction = session.beginTransaction();
+
         session.createNativeQuery("DELETE FROM CONSUMER").executeUpdate();
         transaction.commit();
-        session.close();
+        }catch (Exception e) {
+            e.printStackTrace();
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        } finally {
+            if (session != null)
+                session.close();
 
+
+
+        }
     }
 }
