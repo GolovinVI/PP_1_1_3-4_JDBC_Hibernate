@@ -21,13 +21,19 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("The table has been created");
             connection.commit();
         } catch (SQLException e) {
-          Util.rollBackQuietly(connection);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                }
+            }
         } finally {
-            Util.closeQuietly(statement);
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException ignored) {
+                }
             }
         }
 
@@ -41,13 +47,19 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("Table deleted");
             connection.commit();
         } catch (SQLException e) {
-            Util.rollBackQuietly(connection);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                }
+            }
         } finally {
-            Util.closeQuietly(statement);
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException ignored) {
+                }
             }
         }
 
@@ -63,13 +75,19 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e) {
-            Util.rollBackQuietly(connection);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                }
+            }
         }finally {
-            Util.closeQuietly(preparedStatement);
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException ignored) {
+                }
             }
         }
 
@@ -84,13 +102,19 @@ public class UserDaoJDBCImpl implements UserDao {
             preparedStatement.executeUpdate();
             connection.commit();
         } catch (SQLException e){
-            Util.rollBackQuietly(connection);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                }
+            }
         } finally {
-            Util.closeQuietly(preparedStatement);
-            try {
-                connection.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (preparedStatement!=null){
+                try {
+                    preparedStatement.close();
+                } catch (SQLException ignored) {
+                }
             }
         }
 
@@ -115,9 +139,20 @@ public class UserDaoJDBCImpl implements UserDao {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            Util.rollBackQuietly(connection);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                }
+            }
         }
-        Util.closeQuietly(statement);
+        if (statement!=null){
+            try {
+                statement.close();
+            } catch (SQLException ignored) {
+            }
+        }
         return result;
     }
 
@@ -131,9 +166,20 @@ public class UserDaoJDBCImpl implements UserDao {
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Failed to clear");
-            Util.rollBackQuietly(connection);
+            if (connection != null) {
+                try {
+                    connection.rollback();
+                    connection.setAutoCommit(true);
+                } catch (SQLException ignored) {
+                }
+            }
         } finally {
-            Util.closeQuietly(statement);
+            if (statement!=null){
+                try {
+                    statement.close();
+                } catch (SQLException ignored) {
+                }
+            }
             try {
                 connection.setAutoCommit(true);
             } catch (SQLException e) {
