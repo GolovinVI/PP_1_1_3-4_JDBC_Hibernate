@@ -21,13 +21,7 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("The table has been created");
             connection.commit();
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                } catch (SQLException ignored) {
-                }
-            }
+            e.printStackTrace();
         } finally {
             if (statement!=null){
                 try {
@@ -47,13 +41,7 @@ public class UserDaoJDBCImpl implements UserDao {
             System.out.println("Table deleted");
             connection.commit();
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                    connection.setAutoCommit(true);
-                } catch (SQLException ignored) {
-                }
-            }
+            e.printStackTrace();
         } finally {
             if (statement!=null){
                 try {

@@ -1,6 +1,6 @@
 package jm.task.core.jdbc.util;
 
-import java.lang.reflect.InvocationTargetException;
+
 import java.sql.*;
 
 public class Util {
@@ -18,52 +18,4 @@ public class Util {
             e.printStackTrace();
         } return connection;
     }
-//    public static void rollBackQuietly(Connection connection){
-//        if (connection != null) {
-//            try {
-//                connection.rollback();
-//                connection.setAutoCommit(true);
-//            } catch (SQLException ignored) {
-//            }
-//        }
-//    }
-//    public static void closeQuietly(ResultSet resultSet){
-//        if (resultSet!=null){
-//            try {
-//                resultSet.close();
-//            } catch (SQLException ignored) {
-//            }
-//        }
-//    }
-//    public static void closeQuietly(Statement statement){
-//        if (statement!=null){
-//            try {
-//                statement.close();
-//            } catch (SQLException ignored) {
-//            }
-//        }
-//    }
-//    public static void closeQuietly(Connection connection){
-//        if (connection!=null){
-//            try {
-//                connection.close();
-//                connection.setAutoCommit(true);
-//            } catch (SQLException ignored) {
-//            }
-//        }
-//    }
-//    public static void closeQuietly(PreparedStatement preparedStatement){
-//        if (preparedStatement!=null){
-//            try {
-//                preparedStatement.close();
-//            } catch (SQLException ignored) {
-//            }
-//        }
-//    }
-
-
-
-
-
-
 }
