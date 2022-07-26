@@ -16,8 +16,8 @@ public class UserDaoHibernateImpl implements UserDao {
 
     }
 
-    Transaction transaction = null;
-//    @Deprecated
+
+
     @Override
     public void createUsersTable() {
         Session session = sessionFactory.openSession();
@@ -27,9 +27,6 @@ public class UserDaoHibernateImpl implements UserDao {
         transaction.commit();
         }catch (Exception e){
             e.printStackTrace();
-            if (transaction!=null){
-                transaction.rollback();
-            }
         }finally {
             if(session!=null){
                 session.close();
@@ -38,7 +35,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     }
 
-//    @Deprecated
+
     @Override
     public void dropUsersTable() {
         Session session = sessionFactory.openSession();
@@ -49,9 +46,6 @@ public class UserDaoHibernateImpl implements UserDao {
             transaction.commit();
         }catch (Exception e){
             e.printStackTrace();
-            if (transaction!=null){
-                transaction.rollback();
-            }
         }finally {
             if(session!=null){
                 session.close();
@@ -63,7 +57,6 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
 
-//    @Deprecated
     @Override
     public void saveUser(String name, String lastName, byte age) {
             Session session = getSessionFactory().openSession();
@@ -90,7 +83,7 @@ public class UserDaoHibernateImpl implements UserDao {
 
     }
 
-//    @Deprecated
+
     @Override
     public void removeUserById(long id) {
         Session session = sessionFactory.openSession();
@@ -114,7 +107,7 @@ public class UserDaoHibernateImpl implements UserDao {
     }
 
 
-//    @Deprecated
+
     @Override
     public List<User> getAllUsers() {
         Session session = sessionFactory.openSession();
@@ -135,7 +128,7 @@ public class UserDaoHibernateImpl implements UserDao {
         return userList;
     }
 
-//    @Deprecated
+
     @Override
     public void cleanUsersTable() {
         Session session = sessionFactory.openSession();
@@ -153,9 +146,6 @@ public class UserDaoHibernateImpl implements UserDao {
         } finally {
             if (session != null)
                 session.close();
-
-
-
         }
     }
 }
